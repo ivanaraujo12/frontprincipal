@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Vídeo</title>
+    <style>
+body {
+    font-family: 'Arial', sans-serif;
+   background-image: url(./img/JS\ JavaScript\ Logo\ by\ vladocar.jpg);
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #f8f8f8;
+    margin-top: 20px;
+}
+
+form {
+    background-color: #ffffff;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+form:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #555;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input[type="text"]:focus {
+    border-color: #3498db;
+}
+
+input[type="submit"] {
+    background-color: #290adaf3;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+input[type="submit"]:hover {
+    background-color: #f80c0c67;
+}
+
+ </style>
+</head>
+<body>
+    <h1>Cadastro de Vídeo</h1>
+    <form id="videoForm">
+        <label for="title">Título do Vídeo:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="url">URL do Vídeo:</label>
+        <input type="text" id="url" name="url" required>
+
+        <input type="submit" value="Cadastrar Vídeo">
+    </form>
+
+    <script>
+        document.getElementById("videoForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            // Obtém os valores dos campos de entrada
+            var title = document.getElementById("title").value;
+            var url = document.getElementById("url").value;
+
+            // Crie um objeto de dados para enviar para a API
+            var data = {
+                titulo: title,
+                url: url
+            };
+
+            
+            fetch('http://localhost:3000/video', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                
+                console.log(data); 
+                alert("Vídeo cadastrado com sucesso!");
+                
+            })
+            .catch(error => {
+                console.error('Erro ao cadastrar o vídeo:', error);
+                alert("Ocorreu um erro ao cadastrar o vídeo. Tente novamente.");
+            });
+        });
+    </script>
+</body>
+</html>

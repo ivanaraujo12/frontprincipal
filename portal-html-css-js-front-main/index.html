@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulário de Login</title>
+    <style>
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #0e0ae45d;
+    text-align: center;
+    margin: 0;
+    color: #333;
+}
+
+h1 {
+    color: #ece1e1;
+    font-size: 2.8em;
+    margin-bottom: 30px;
+}
+
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.container:hover {
+    transform: scale(1.03);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #05050e;
+    text-align: left;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 1px solid #bdc3c7;
+    border-radius: 10px;
+    background-color: #ecf0f1;
+    color: #555;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #3498db;
+}
+
+input[type="submit"] {
+    background-color: #f1070773;
+    color: #ffffff;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+input[type="submit"]:hover {
+    background-color: #1511eb7e;
+}
+
+.form-group {
+    text-align: left;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.container:nth-child(even) {
+    background-color: #ecf0f1;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    <h1>Escola JS</h1>
+    <h1>Login do aluno</h1>
+    <div class="container">
+        <form id="loginForm" class="form-group">
+            <label for="username">Email de Usuário:</label>
+            <input type="email" id="username" name="username" required>
+            
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <input type="submit" value="Entrar">
+        </form>
+    </div>
+
+    <h1>Cadastro do aluno</h1>
+    <div class="container">
+        <form id="cadastroForm" class="form-group">
+            <label for="usernameCadastro">Nome de Usuário:</label>
+            <input type="text" id="usernameCadastro" name="username" required>
+            
+            <label for="emailCadastro">Email de Usuário:</label>
+            <input type="email" id="emailCadastro" name="email" required>
+            
+            <label for="passwordCadastro">Senha:</label>
+            <input type="password" id="passwordCadastro" name="password" required>
+            
+            <input type="submit" value="Cadastrar">
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); 
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            
+            if (username === "aluno@teste.com" && password === "aluno") {
+                
+                window.location.href = "areaDoAluno.html";
+
+            } else if (username === "professor@teste.com" && password === "professor") {
+                
+                window.location.href = "areaDoProfessor.html";
+
+            } else if (username === "manager@teste.com" && password === "manager") {
+                
+                window.location.href = "areaDoManager.html";
+
+            } else {
+                
+                alert("Usuário ou senha incorretos. Tente novamente.");
+            
+            }
+
+
+
+        });
+
+
+        document.getElementById("cadastroForm").addEventListener("submit", function(event){
+            
+            event.preventDefault();
+
+            var newUsername = document.getElementById("usernameCadastro").value;
+            var email = document.getElementById("emailCadastro").value;
+            var newPassword = document.getElementById("passwordCadastro").value;
+
+            var data = {
+                nome: newUsername,
+                email: email,
+                senha: newPassword
+            };
+
+            fetch('http://localhost:3000/aluno', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                
+                console.log(data); 
+                alert("Aluno cadastrado com sucesso!");
+                
+            })
+            .catch(error => {
+                console.error('Erro ao cadastrar o aluno:', error);
+                alert("Ocorreu um erro ao cadastrar o aluno. Tente novamente.");
+            });
+        })
+    </script>
+</body>
+</html>

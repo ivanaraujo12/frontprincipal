@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Professor</title>
+    <style>
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url(./img/Radica\ Software\ Launches\ Electra\ Cloud\,\ World’s\ First\ Fully\ Browser-based\ Electrical\ CAD\ Software\ -\ Civil\ +\ Structural\ Engineer\ magazine.jpg);
+    text-align: center;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 500px;
+    width: 100%;
+    margin: 20px;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+form:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    color: #f5f7f8;
+    margin-top: 0; 
+    margin-bottom: 20px; 
+    
+}
+
+label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #555;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #3498db;
+}
+
+input[type="submit"] {
+    background-color: #3498db;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+input[type="submit"]:hover {
+    background-color: #0078ad;
+}
+
+/* Adiciona regras para dispositivos móveis */
+@media (max-width: 600px) {
+    form {
+        margin: 20px 0;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <h1>Cadastro de Professor</h1>
+    <form id="professorForm">
+        <label for="name">Nome do Professor:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">E-mail do Professor:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Senha do Professor:</label>
+        <input type="password" id="password" name="password" required>
+
+        <input type="submit" value="Cadastrar Professor">
+    </form>
+
+    <script>
+        document.getElementById("professorForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            var data = {
+                nome: name,
+                email: email,
+                senha: password
+            };
+
+            fetch('http://localhost:3000/professor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                   
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); 
+                alert("Professor cadastrado com sucesso!");
+            })
+            .catch(error => {
+                console.error('Erro ao cadastrar o professor:', error);
+                alert("Ocorreu um erro ao cadastrar o professor. Tente novamente.");
+            });
+        });
+    </script>
+</body>
+</html>
